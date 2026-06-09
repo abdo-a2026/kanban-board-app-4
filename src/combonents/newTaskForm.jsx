@@ -25,8 +25,17 @@ function NewTaskForm({ setIsModalOpen }) {
     console.log(formData);
   };
 
+  const handleOverLayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setIsModalOpen(false);
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div
+      onClick={handleOverLayClick}
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    >
       <div className="bg-[#2b2c37] w-full max-w-md p-8 rounded-xl shadow-2xl">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-white text-xl font-bold">Add New Task</h2>
