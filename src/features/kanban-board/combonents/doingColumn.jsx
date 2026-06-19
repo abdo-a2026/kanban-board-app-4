@@ -1,20 +1,17 @@
 import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTasks } from "../redux/taskSlise";
+import { fetchTasks } from "../services/taskSlice";
 import TaskCard from "./taskCard";
 
-function DoneColumn() {
+function DoingColumn() {
   // const tasks = useSelector((state) => state.tasks.tasks);
-  // const doneTasks = tasks?.filter((task) => task.status === "done") || [];
+  // const doingTasks = tasks?.filter((task) => task.status === "doing") || [];
 
-  
   const dispatch = useDispatch();
-  const { tasks: tasksData, loading } = useSelector(
-    (state) => state.tasks
-  );
+  const { tasks: tasksData, loading } = useSelector((state) => state.tasks);
   const tasks = Array.isArray(tasksData) ? tasksData : [];
-  const doneTasks = tasks.filter((task) => task.status === "done");
+  const doingTasks = tasks.filter((task) => task.status === "doing");
 
   useEffect(() => {
     dispatch(fetchTasks());
@@ -29,12 +26,12 @@ function DoneColumn() {
       <div className="flex items-center gap-2 mb-2">
         <div className="w-3 h-3 rounded-full bg-blue-400"></div>
         <h2 className="text-gray-400 font-bold tracking-widest text-sm uppercase">
-          Done ({doneTasks?.length || 0})
+          DOING ({doingTasks?.length || 0})
         </h2>
       </div>
 
       <div className="flex flex-col gap-4 h-full">
-        {doneTasks.map((task) => (
+        {doingTasks.map((task) => (
           <TaskCard key={task.id} task={task} />
         ))}
       </div>
@@ -42,4 +39,4 @@ function DoneColumn() {
   );
 }
 
-export default DoneColumn;
+export default DoingColumn;

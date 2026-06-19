@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteTask } from "../redux/taskSlise";
+// import { deleteTask } from "../../../redux/taskSlice";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { setCurrentTask } from "../redux/taskSlise";
+// import { useSelector } from "react-redux";
+import { setCurrentTask } from "../services/taskSlice";
+import { openConfirmDialog, showToastAction } from "../../../redux/uiSlice";
 
 function TaskCard({ task }) {
   // console.log(task);
@@ -17,10 +18,19 @@ function TaskCard({ task }) {
 
   const dispatch = useDispatch();
 
-  const handlerDelete = async () => {
-    if (window.confirm(`You want delete the task: ${task.name}?`)) {
-      dispatch(deleteTask(task.id));
-    }
+  // const handlerDelete = async () => {
+  //   if (window.confirm(`You want delete the task: ${task.name}?`)) {
+  //     dispatch(deleteTask(task.id));
+  //   }
+  // };
+
+  const handleDeleteClick = () => {
+    dispatch(
+      openConfirmDialog({
+        message: `Are you sure from delete "${task.name}" ?`,
+        targetId: task.id,
+      })
+    );
   };
 
   const handleEdit = () => {
@@ -48,7 +58,7 @@ function TaskCard({ task }) {
         </button>
         <button
           className="text-xs text-red-400 hover:underline font-bold"
-          onClick={handlerDelete}
+          onClick={handleDeleteClick}
         >
           Delete
         </button>

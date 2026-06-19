@@ -3,8 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { clearCurrentTask } from "../redux/taskSlise";
-import { updateTask } from "../redux/taskSlise";
+import { clearCurrentTask } from "../services/taskSlice";
+import { updateTask } from "../services/taskSlice";
 
 function UpdateTaskForm() {
   const dispatch = useDispatch();
@@ -27,7 +27,14 @@ function UpdateTaskForm() {
       .unwrap()
       .then(() => {
         dispatch(clearCurrentTask());
-        alert("The task is added successfully");
+        // alert("The task is added successfully");
+
+        dispatch(
+          showToastAction({
+            message: `The taske ${name} is changed to ${status}`,
+            type: "success",
+          })
+        );
       })
       .catch((error) => {
         console.log(error);

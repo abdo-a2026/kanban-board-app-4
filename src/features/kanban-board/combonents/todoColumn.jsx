@@ -1,37 +1,41 @@
 import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTasks } from "../redux/taskSlise";
+import { fetchTasks } from "../services/taskSlice";
+
 import TaskCard from "./taskCard";
 
-function DoingColumn() {
+function TodoColumn() {
   // const tasks = useSelector((state) => state.tasks.tasks);
-  // const doingTasks = tasks?.filter((task) => task.status === "doing") || [];
+  // const todoTasks = tasks?.filter((task) => task.status === "todo") || [];
 
   const dispatch = useDispatch();
   const { tasks: tasksData, loading } = useSelector((state) => state.tasks);
   const tasks = Array.isArray(tasksData) ? tasksData : [];
-  const doingTasks = tasks.filter((task) => task.status === "doing");
+  const todoTasks = tasks.filter((task) => task.status === "todo");
+
+  if (loading === "true") {
+    console.log("loading==================");
+    return <p>Please wate to loading the Tasks...</p>;
+  }
 
   useEffect(() => {
     dispatch(fetchTasks());
   }, [dispatch]);
-
-  if (loading === "true") {
-    return <p>Please wate to loading the Tasks...</p>;
-  }
+  // console.log(tasks);
+  // console.log(todoTasks);
 
   return (
     <div className="w-[300px] flex flex-col gap-4">
       <div className="flex items-center gap-2 mb-2">
         <div className="w-3 h-3 rounded-full bg-blue-400"></div>
         <h2 className="text-gray-400 font-bold tracking-widest text-sm uppercase">
-          DOING ({doingTasks?.length || 0})
+          Todo ({todoTasks?.length || 0})
         </h2>
       </div>
 
       <div className="flex flex-col gap-4 h-full">
-        {doingTasks.map((task) => (
+        {todoTasks.map((task) => (
           <TaskCard key={task.id} task={task} />
         ))}
       </div>
@@ -39,4 +43,4 @@ function DoingColumn() {
   );
 }
 
-export default DoingColumn;
+export default TodoColumn;

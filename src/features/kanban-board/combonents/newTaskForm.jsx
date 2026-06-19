@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTask } from "../redux/taskSlise";
+import { addTask } from "../services/taskSlice";
+import { showToastAction } from "../../../redux/uiSlice";
 
 function NewTaskForm({ setIsModalOpen }) {
   const [name, setName] = useState("");
@@ -17,7 +18,14 @@ function NewTaskForm({ setIsModalOpen }) {
       .unwrap()
       .then(() => {
         setIsModalOpen(false);
-        alert("The task is added successfully");
+        // alert("The task is added successfully");
+
+        dispatch(
+          showToastAction({
+            message: "The task is added successfully",
+            type: "success",
+          })
+        );
       })
       .catch((error) => {
         console.log(error);

@@ -45,7 +45,7 @@ export const updateTask = createAsyncThunk(
   }
 );
 
-const taskSlise = createSlice({
+const taskSlice = createSlice({
   name: "tasks",
   initialState: { tasks: [], loading: false, error: null, currentTask: null },
 
@@ -94,5 +94,5 @@ const taskSlise = createSlice({
   },
 });
 
-export default taskSlise.reducer;
-export const { setCurrentTask, clearCurrentTask } = taskSlise.actions;
+export default taskSlice.reducer;
+export const { setCurrentTask, clearCurrentTask } = taskSlice.actions;
